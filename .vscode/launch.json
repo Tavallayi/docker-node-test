@@ -1,0 +1,60 @@
+{
+    "configurations": [
+        {
+            "name": "Docker Node.js Launch server 1",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-run: debug server 1",
+            "platform": "node",
+            "node": {
+                "package": "${workspaceFolder}/server1/package.json",
+                "localRoot": "${workspaceFolder}/server1"
+            }
+        },
+        {
+            "name": "Docker Node.js Launch server 2",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-run: debug server 2",
+            "platform": "node",
+            "node": {
+                "package": "${workspaceFolder}/server2/package.json",
+                "localRoot": "${workspaceFolder}/server2"
+            }
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Docker: Attach to Node server 1",
+            "port": 9229,
+            "remoteRoot": "/usr/src/app",
+            "localRoot": "${workspaceFolder}/server1"
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Docker: Attach to Node server 2",
+            "port": 9230,
+            "remoteRoot": "/usr/src/app",
+            "localRoot": "${workspaceFolder}/server2"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Server 1/Server 2",
+            "configurations": [
+                "Docker Node.js Launch server 1",
+                "Docker Node.js Launch server 2"
+            ],
+            "stopAll": true
+        },
+        {
+            "name": "Attach Server 1/Server 2",
+            "configurations": [
+                "Docker: Attach to Node server 1",
+                "Docker: Attach to Node server 2"
+            ],
+            "stopAll": true
+        }
+    ]
+}

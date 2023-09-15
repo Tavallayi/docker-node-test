@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  web1:
+    extends:
+      file: ./server1/docker-compose.yml
+      service: server1
+  web2:
+    extends:
+      file: ./server2/docker-compose.yml
+      service: server2

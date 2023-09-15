@@ -1,0 +1,89 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "docker-build",
+			"label": "docker-build server 1",
+			"platform": "node",
+			"dockerBuild": {
+				"dockerfile": "${workspaceFolder}/server1/Dockerfile",
+				"context": "${workspaceFolder}/server1",
+				"pull": true
+			},
+			"node": {
+				"package": "${workspaceFolder}/server1/package.json"
+			}
+		},
+		{
+			"type": "docker-run",
+			"label": "docker-run: release server 1",
+			"dependsOn": [
+				"docker-build"
+			],
+			"platform": "node",
+			"node": {
+				"package": "${workspaceFolder}/server1/package.json"
+			}
+		},
+		{
+			"type": "docker-run",
+			"label": "docker-run: debug server 1",
+			"dependsOn": [
+				"docker-build"
+			],
+			"dockerRun": {
+				"env": {
+					"DEBUG": "*",
+					"NODE_ENV": "development"
+				}
+			},
+			"node": {
+				"package": "${workspaceFolder}/server1/package.json",
+				"enableDebugging": true,
+				"inspectPort": 9231
+			}
+		},
+		{
+			"type": "docker-build",
+			"label": "docker-build server 2",
+			"platform": "node",
+			"dockerBuild": {
+				"dockerfile": "${workspaceFolder}/server2/Dockerfile",
+				"context": "${workspaceFolder}/server2",
+				"pull": true
+			},
+			"node": {
+				"package": "${workspaceFolder}/server2/package.json"
+			}
+		},
+		{
+			"type": "docker-run",
+			"label": "docker-run: release server 2",
+			"dependsOn": [
+				"docker-build"
+			],
+			"platform": "node",
+			"node": {
+				"package": "${workspaceFolder}/server2/package.json"
+			}
+		},
+		{
+			"type": "docker-run",
+			"label": "docker-run: debug server 2",
+			"dependsOn": [
+				"docker-build"
+			],
+			"dockerRun": {
+				"env": {
+					"DEBUG": "*",
+					"NODE_ENV": "development"
+				}
+			},
+			"node": {
+				"package": "${workspaceFolder}/server2/package.json",
+				"enableDebugging": true,
+				"inspectPort": 9232
+			}
+		}
+	]
+}
